@@ -1,10 +1,17 @@
-
+import { Login } from "./components/Login"
+import LoginPage from "./pages/Login"
+import { Route, Routes  } from "react-router-dom"
 function App() {
 
   return (
-    <div>
-      <h1>Hello, World!</h1>
-    </div>
+    
+ <>
+  
+  <Routes>
+     {/* <Route path="/" element={<LoginPage/>}/> */}
+    <Route path="login" element={<LoginPage/>}/>
+  </Routes>
+ </>
   )
 }
 
