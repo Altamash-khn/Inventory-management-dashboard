@@ -34,7 +34,7 @@ const navigate = useNavigate();
 
   try {
     const res = await fetch(
-      "https://inventory-management-backened.onrender.com/login",
+      "https://inventory-management-backened-1.onrender.com/login",
       {
         method: "POST",
         headers: {
