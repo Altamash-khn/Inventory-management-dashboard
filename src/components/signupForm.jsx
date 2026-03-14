@@ -53,7 +53,7 @@ export function Signup() {
 
     try {
       const res = await fetch(
-        "https://inventory-management-backened.onrender.com/signup",
+        "https://inventory-management-backened-1.onrender.com/signup",
         {
           method: "POST",
           headers: {
