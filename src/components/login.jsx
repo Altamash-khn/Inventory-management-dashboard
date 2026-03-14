@@ -122,11 +122,11 @@ const handleChange = (e)=>{
         </form>
       </CardContent>
       <CardFooter className="flex-col gap-2">
-        <Button type="submit" className="w-full" onClick={handleLogin}>
+        <Button type="submit" className="w-full bg-black text-white" onClick={handleLogin}>
           Login
         </Button>
-        <p variant="outline" className="w-full text-gray-600  text-center">
-          Don't have an account? <span className="text-black hover:underline cursor-pointer">Sign Up</span>
+        <p variant="outline" className="w-full bg-gray-500 text-white rounded-2xl p-1 text-center">
+          Don't have an account? <span className="text-black  hover:underline text-white cursor-pointer">Sign Up</span>
         </p>
       </CardFooter>
     </Card>
