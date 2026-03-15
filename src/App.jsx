@@ -8,7 +8,7 @@ function App() {
   return (
     <Routes>
       {/* Default Route */}
-      <Route path="/" element={<Navigate to="/HomePage" />} />x  x
+      <Route path="/" element={<Navigate to="/HomePage" />} />  
 
       <Route path="/HomePage" element={<HomePage />} />
       <Route path="/products" element={<ProductForm/>} />
