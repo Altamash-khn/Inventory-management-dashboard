@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Login } from "./components/Login";
+import { Login } from "./components/login";
 import { Signup } from "./components/signupForm.jsx";
 import ProductForm from "./pages/Products.jsx";
 import HomePage from "./pages/Login.jsx";
@@ -8,7 +8,7 @@ function App() {
   return (
     <Routes>
       {/* Default Route */}
-      <Route path="/" element={<Navigate to="/HomePage" />} />x  x
+      <Route path="/" element={<Navigate to="/HomePage" />} />  
 
       <Route path="/HomePage" element={<HomePage />} />
       <Route path="/products" element={<ProductForm/>} />
