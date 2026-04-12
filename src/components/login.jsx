@@ -15,7 +15,7 @@ import { Label } from "@/components/ui/label"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export function Login() {
+export function LoginComponent() {
 const navigate = useNavigate();
   const [show , setShow]= useState(true)
   const [user , setUser] = useState({
