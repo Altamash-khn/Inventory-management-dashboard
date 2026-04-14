@@ -1,14 +1,17 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "./pages/Login.jsx";
-import SignUp from "./pages/SignUp.jsx";
+import Login from "./pages/Login"
+import SignUp from "./pages/SignUp";
+import Home from "./pages/Home";
 
 function App() {
   return (
-    <Routes>
-      <p>go to <Link to="/login">login</Link></p>
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<SignUp />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
+    </>
   );
 }
 
