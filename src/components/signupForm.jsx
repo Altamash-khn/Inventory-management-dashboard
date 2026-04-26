@@ -1,6 +1,7 @@
-import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,41 +17,16 @@ import { Label } from "@/components/ui/label";
 
 export function Signup() {
   const navigate = useNavigate();
-
   const [show, setShow] = useState(false);
 
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
-  const handleChange = (e) => {
-    setUser((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleSignup = async (e) => {
-    e.preventDefault();
-
-    if (
-      !user.name.trim() ||
-      !user.email.trim() ||
-      !user.password.trim() ||
-      !user.confirmPassword.trim()
-    ) {
-      alert("Sab fields required hai");
-      return;
-    }
-
-    if (user.password !== user.confirmPassword) {
-      alert("Password match nahi kar raha");
-      return;
-    }
-
+  const handleSignup = async (data) => {
     try {
       const res = await fetch(
         "https://inventory-management-backened-1.onrender.com/signup",
@@ -60,29 +36,28 @@ export function Signup() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            name: user.name,
-            email: user.email,
-            password: user.password,
+            name: data.name,
+            email: data.email,
+            password: data.password,
           }),
         }
       );
 
-      const data = await res.json();
+      const result = await res.json();
 
       if (res.ok) {
-      
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("name", user.name);
-        localStorage.setItem("email", user.email);
+        localStorage.setItem("token", result.token);
+        localStorage.setItem("name", data.name);
+        localStorage.setItem("email", data.email);
 
         alert("Signup Successful ✅");
         navigate("/home");
       } else {
-        alert(data.message || "Signup failed");
+        alert(result.message || "Signup failed");
       }
     } catch (error) {
       console.log(error);
-      alert("Server error, baad me try karo");
+      alert("Server error");
     }
   };
 
@@ -99,41 +74,45 @@ export function Signup() {
         </CardHeader>
 
         <CardContent>
-          <form onSubmit={handleSignup} className="space-y-6">
-          
+          <form onSubmit={handleSubmit(handleSignup)} className="space-y-6">
+
             <div className="space-y-2">
               <Label>Name</Label>
               <Input
-                name="name"
-                value={user.name}
-                onChange={handleChange}
+                {...register("name", { required: "Name is required" ,})}
                 type="text"
                 placeholder="Enter your name"
-                className="h-11"
               />
+              <p className="text-red-500 text-sm">{errors.name?.message}</p>
             </div>
 
-           
             <div className="space-y-2">
               <Label>Email</Label>
               <Input
-                name="email"
-                value={user.email}
-                onChange={handleChange}
+                {...register("email", {
+                  required: "Email required",
+                  pattern: {
+                    value: /^\S+@\S+$/i,
+                    message: "Invalid email",
+                  },
+                })}
                 type="email"
                 placeholder="Enter your email"
-                className="h-11"
               />
+              <p className="text-red-500 text-sm">{errors.email?.message}</p>
             </div>
 
-           
             <div className="space-y-2">
               <Label>Password</Label>
               <div className="relative">
                 <Input
-                  name="password"
-                  value={user.password}
-                  onChange={handleChange}
+                  {...register("password", {
+                    required: "Password required",
+                    minLength: {
+                      value: 6,
+                      message: "Min 6 characters",
+                    },
+                  })}
                   type={show ? "text" : "password"}
                   placeholder="Create a strong password"
                   className="h-11 pr-10"
@@ -146,18 +125,24 @@ export function Signup() {
                   {show ? <FaEye /> : <FaEyeSlash />}
                 </button>
               </div>
+              <p className="text-red-500 text-sm">{errors.password?.message}</p>
             </div>
 
             <div className="space-y-2">
               <Label>Confirm Password</Label>
               <Input
-                name="confirmPassword"
-                value={user.confirmPassword}
-                onChange={handleChange}
+                {...register("confirmPassword", {
+                  required: "Confirm password required",
+                  validate: (value) =>
+                    value === watch("password") || "Passwords do not match",
+                })}
                 type="password"
                 placeholder="Re-enter password"
                 className="h-11"
               />
+              <p className="text-red-500 text-sm">
+                {errors.confirmPassword?.message}
+              </p>
             </div>
 
             <Button

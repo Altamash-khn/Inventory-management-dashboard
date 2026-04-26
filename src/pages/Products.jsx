@@ -75,7 +75,7 @@ function ProductForm() {
       console.log("API response:", data);
 
      
-      setProducts(prev => [...prev, data.product || data]);
+  
 
      
       setProductName("");
